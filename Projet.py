@@ -1,17 +1,8 @@
 def display_map(m,d):
-    for i in range(len(m)):
-        for k in range(len(m[i])):
-            for x,y in d.items():
-                if m[i][k] == x:
-                    m[i][k] = y
-                    print(m[i][k], end='')
-        print()
- 
-def display_map2(m, d):
-    for row in m:
-        for num in row:
-            print(d[num], end='')
-        print()
+    for ligne in m: # parcours la liste de la matrice 
+        for elem in ligne: # parcours élément de la ligne associée
+            print(d[elem], end="") # affiche la valeur associé de la matrice sans retour à la ligne avec "end" 
+        print() # retour à la ligne 
 
 m = [[0,0,0,1,1],
      [0,0,0,0,1],
