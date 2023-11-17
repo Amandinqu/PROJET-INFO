@@ -6,7 +6,8 @@ def display_map(m,d):
 
 def create_perso(depart):
     x,y = depart
-    d = {"char": "o"}
+    d={} # création du dictionnaire 
+    d=["char"]="o" 
     d["x"] = x # si cle "x" n'existe pas, on l'ajoute au diccionaire avec la valeur x 
     d["y"] = y 
     return d
