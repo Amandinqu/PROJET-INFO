@@ -21,6 +21,20 @@ def display_map_and_char(m,d,p):
             else: 
                 print(d[valeur],end" ")
             print()
+            
+def update_p(letter,p):
+    personne = create_perso(p)
+    lettre = input("Quel deplacement?")
+    if lettre in ["z","s","d","q"]:
+        if lettre == "z":
+            personne["y"] +=1
+        if lettre == "s":
+            personne["y"] -=1
+        if lettre == "d":
+            personne["x"] +=1
+        if lettre == "q":
+            personne["x"] -=1
+    return personne
 
 m = [[0,0,0,1,1],
      [0,0,0,0,1],
@@ -31,6 +45,9 @@ personnage=create_perso((0,0))
 print(display_map(m,dico))
 print(create_perso((0,0)))
 print(display_map_and_char(m,dico,p))
+
+lettre = input("Quel deplacement?")
+print(display_map_and_char(m,dico,update_p(lettre,t)))
      
     
 
