@@ -6,11 +6,11 @@ def display_map(m,d):
 
 def create_perso(depart):
     x,y = depart
-    d={} # création du dictionnaire 
-    d=["char"]="o" 
-    d["x"] = x # si cle "x" n'existe pas, on l'ajoute au diccionaire avec la valeur x 
-    d["y"] = y 
-    return d
+    p={} # création du dictionnaire 
+    p=["char"]="o" 
+    p["x"] = x # si cle "x" n'existe pas, on l'ajoute au diccionaire avec la valeur x 
+    p["y"] = y 
+    return p
 
 def display_map_and_char(m,d,p):
     x,y = p
