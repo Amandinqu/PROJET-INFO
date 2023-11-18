@@ -24,8 +24,6 @@ def display_map_and_char(m,d,p):
             print()
             
 def update_p(letter,p):
-    personne = create_perso(p)
-    lettre = input("Quel deplacement?")
     if lettre in ["z","s","d","q"]:
         if lettre == "z":
             personne["y"] +=1
@@ -42,13 +40,16 @@ m = [[0,0,0,1,1],
      [1,1,0,0,0],
      [0,0,0,0,0]]
 dico = {0:" ", 1:"#"}
-personnage=create_perso((0,0))
+p=create_perso((0,0))
+
 print(display_map(m,dico))
 print(create_perso((0,0)))
 print(display_map_and_char(m,dico,p))
 
-lettre = input("Quel deplacement?")
-print(display_map_and_char(m,dico,update_p(lettre,t)))
+while True:
+    lettre = input("Quel deplacement?")
+    update = update_p(lettre,p)         
+    print(display_map_and_char(m,dico,update))
      
     
 
