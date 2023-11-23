@@ -60,19 +60,19 @@ def update_p(lettre,p,m): #changement de cordonnes en dicctionnaire de personnag
     return p
 
 #proposition pour les ameliorations 3.4, 3.5
-def create_objects(nb_objects, m):
+def create_objects(nb_objects, m): 
     nb = 0 #nombre des objects on veut afficher
     while nb < nb_objects:
         x = random.randint(0,len(m[p["y"]])-1) #on a -1 car en random la deuxieme caractere est inclu
         y = random.randint(0,len(m)-1)
         if m[y][x] == 0:
             m[y][x] = 2 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
-            nb += 1
+            nb += 1 # ajout pour que la boucle s'arrete 
             
 def update_objects(p,objects):
     if m[p["y"]][p["x"]] == 2:
-        m[p["y"]][p["x"]] = 0
-        p["score"] += 1
+        m[p["y"]][p["x"]] = 0 #pour que le score "mange une seule fois"
+        p["score"] += 1 #ajout du score changement de score 
 
 def display_map_and_char_and_objects(m, d, p, objects):
     M = m.copy()
@@ -95,15 +95,15 @@ p=create_perso((0,0))
 
 print(display_map(m,dico)) #on a none a la fin a cause de print
 print(create_perso((0,0)))
-objects = create_objects(3, m)
+objects = create_objects(3, m) # définir le nombre d'objet "*" dans notre jeu 
 display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
 
 while True:
     lettre = input("Quel deplacement?")
-    updatep = update_p(lettre,p,m)  
-    updateo = update_objects(p,objects)
+    updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
+    updateo = update_objects(p,objects) # effacer l'etoile 
     display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
-    #2.4 comment arreter?
+    #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
     
 
     
