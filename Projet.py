@@ -1,8 +1,8 @@
-import random
+import random # la génération de nombre aléatoires 
 
 def display_map(m,d):
-    for x in m: # parcours la liste de la matrice 
-        for y in ligne: # parcours éléments de la ligne associée
+    for ligne in m: # parcours la liste de la matrice 
+        for elem in ligne: # parcours éléments de la ligne associée
             print(d[elem], end="") # affiche la valeur associé de la matrice sans retour à la ligne avec "end" 
         print() # retour à la ligne 
 
