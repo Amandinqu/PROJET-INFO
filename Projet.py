@@ -42,13 +42,13 @@ def update_p(letter,p):
 def update_p(lettre,p,m): #changement de cordonnes en dicctionnaire de personnage
     if lettre in ["z","s","d","q"]:
         if lettre == "z": 
-            p["y"] -=1 
+            p["y"] -=1 # 
             if p["y"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus petite que la nombre des lignes de la matrice et si la valeur de matrice des cordonnees de notre x,y est egal a 1, on a #  
-                p["y"] += 1     
+                p["y"] += 1   # pour revenir dans la map 
         if lettre == "s":
             p["y"] +=1 
-            if p["y"] >= len(m) or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus grande que la nombre des lignes de la matrice
-                p["y"] -= 1     
+            if p["y"] >= len(m) or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus grande que la nombre des lignes de la matrice si 
+                p["y"] -= 1    # le personnage ne bouge pas 
         if lettre == "d":  
             p["x"] +=1
             if p["x"] >= len(m[p["y"]]) or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus grande que la nombre des colonnes de la matrice
