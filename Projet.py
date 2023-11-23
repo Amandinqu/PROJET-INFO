@@ -1,59 +1,59 @@
 import random # la génération de nombre aléatoires 
 
-def display_map(m,d):
+def display_map(m,d): # affichage de la carte 
     for ligne in m: # parcours la liste de la matrice 
         for elem in ligne: # parcours éléments de la ligne associée
             print(d[elem], end="") # affiche la valeur associé de la matrice sans retour à la ligne avec "end" 
         print() # retour à la ligne 
 
-def create_perso(depart):
-    x,y = depart
+def create_perso(depart): # création dictionnaire représentant le personnage 
+    x,y = depart # création du couple 
     p={} # création du dictionnaire 
     p["char"]="o" #on peut faire p = {"char":"o"}
-    p["x"] = x # si cle "x" n'existe pas, on l'ajoute au dictionnaire avec la valeur x 
-    p["y"] = y 
+    p["x"] = x # si cle "x" n'existe pas on crée la cle et on ajoute au dictionnaire avec la valeur x qui est sa position en abscisse 
+    p["y"] = y # de même pour la position en ordonné
     p["score"] = 0 #initialisation du score pour avoir le score (3.6)
     return p
 
-def display_map_and_char(m,d,p):
-    x,y = p
-    M = m.copy()#cf td 1 avec la methode copy
+def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonction de la position du perso et pour les autres la valeur du dictionnaire d
+    x,y = p 
+    M = m.copy()#cf td 1 avec la methode copy les modifications n'impactent pas la matrice d'origine 
     for i,ligne in enumerate(M): 
-        for j,valeur in enumerate(ligne): 
+        for j,valeur in enumerate(ligne): # boucle imbriqué --> on parcourt ici chaque élément de la matrice M 
             if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
                 print(p["char"],end" ") # affichage du personnage 
             else: 
-                print(d[valeur],end" ") 
-            print()
+                print(d[valeur],end" ") # sinon on affiche la valeur du dic d 
+            print() # retour à la ligne à la fin de chaque ligne de la matrice 
                         
-def update_p(letter,p):
-    if lettre in ["z","s","d","q"]:
-        if lettre == "z":
-            personne["y"] +=1
-        if lettre == "s":
-            personne["y"] -=1
-        if lettre == "d":
-            personne["x"] +=1
-        if lettre == "q":
-            personne["x"] -=1
-    return personne
+def update_p(letter,p): # mise à jour de la position du personnage sur la carte 
+    if lettre in ["z","s","d","q"]: # verification de la lettre entrée 
+        if lettre == "z": # en haut 
+            personne["y"] +=1 # incrémente de 1 "y" la position en ordonnée 
+        if lettre == "s": # en bas 
+            personne["y"] -=1 # décrémente de 1 "y" la position en ordonnée
+        if lettre == "d": # à droite 
+            personne["x"] +=1 # incrémente de 1 "x" la position en abscisse 
+        if lettre == "q": # à gauche 
+            personne["x"] -=1 # décrémente de 1 "x" la position en abscisse 
+    return personne # retourne la position du personnage sur la carte 
 
 #proposition pour les ameliorations 3.1, 3.2:
-def update_p(lettre,p,m): #changement de cordonnes en dicctionnaire de personnage
-    if lettre in ["z","s","d","q"]:
-        if lettre == "z": 
-            p["y"] -=1 # 
+def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage # ne sort pas de la carte 
+    if lettre in ["z","s","d","q"]: #verification de la lettre entrée 
+        if lettre == "z": # en haut 
+            p["y"] -=1 # decremente de 1 "y" la position en ordonnée 
             if p["y"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus petite que la nombre des lignes de la matrice et si la valeur de matrice des cordonnees de notre x,y est egal a 1, on a #  
                 p["y"] += 1   # pour revenir dans la map 
-        if lettre == "s":
-            p["y"] +=1 
-            if p["y"] >= len(m) or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus grande que la nombre des lignes de la matrice si 
-                p["y"] -= 1    # le personnage ne bouge pas 
-        if lettre == "d":  
+        if lettre == "s": # en bas 
+            p["y"] +=1 # incrémente de 1 "y" la position en ordonnée 
+            if p["y"] >= len(m) or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus grande que la longueur du nombre des lignes de la matrice si 
+                p["y"] -= 1    # 
+        if lettre == "d":  # à droite 
             p["x"] +=1
             if p["x"] >= len(m[p["y"]]) or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus grande que la nombre des colonnes de la matrice
                 p["x"] -= 1      
-        if lettre == "q":
+        if lettre == "q": #à gauche 
             p["x"] -=1
             if p["x"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus petite que la nombre des colonnes de la matrice
                 p["x"] += 1               
