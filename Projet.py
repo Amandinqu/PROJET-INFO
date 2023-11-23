@@ -12,7 +12,7 @@ def create_perso(depart):
     p["char"]="o" #on peut faire p = {"char":"o"}
     p["x"] = x # si cle "x" n'existe pas, on l'ajoute au dictionnaire avec la valeur x 
     p["y"] = y 
-    p["score"] = 0 #pour avoir le score (3.6)
+    p["score"] = 0 #initialisation du score pour avoir le score (3.6)
     return p
 
 def display_map_and_char(m,d,p):
@@ -20,10 +20,10 @@ def display_map_and_char(m,d,p):
     M = m.copy()#cf td 1 avec la methode copy
     for i,ligne in enumerate(M): 
         for j,valeur in enumerate(ligne): 
-            if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
-                print(p["char"],end" ") 
+            if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
+                print(p["char"],end" ") # affichage du personnage 
             else: 
-                print(d[valeur],end" ")
+                print(d[valeur],end" ") 
             print()
                         
 def update_p(letter,p):
