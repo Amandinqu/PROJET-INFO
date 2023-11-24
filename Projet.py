@@ -115,6 +115,37 @@ while True:
     display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
     #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
 
+def create_objects(nb_objects, m):   
+    nb = 0 #nombre des objects on veut afficher
+    O =[] 
+    while nb < nb_objects:
+        x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
+        y = random.randint(0,len(m)-1)
+        if (x,y) not in O:
+            if m[y][x] == 0:
+                O.append((x,y))
+                nb += 1
+    return O     
+def update_objects(p,objects):
+    if M[p["y"]][p["x"]] == 2:
+        M[p["y"]][p["x"]] = 0
+        p["score"] += 1
+
+def display_map_and_char_object(m, d, p, objects):
+    M = m.copy()
+    for i, ligne in enumerate(M):
+        for j, valeur in enumerate(ligne):
+            if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
+                print(p["char"], end='')
+            else:
+                print(d[valeur], end='')
+            for e in objects:
+                x,y = e
+                if i == y and j == x:
+                    print("*")
+                
+        print()
+    print("your score: ", p["score"])
     
 
     
