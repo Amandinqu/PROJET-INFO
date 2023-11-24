@@ -85,6 +85,12 @@ def display_map_and_char_and_objects(m, d, p, objects):
                 
         print()
     print("your score: ", p["score"])
+def generate_random_map(size_map):
+    M_generate=[[0 for j in range(size_map)] for i in range(size_map)] 
+    return M_generate
+
+
+size_map=(5)
 
 m = [[0,0,0,1,1],
      [0,0,0,0,1],
@@ -104,6 +110,7 @@ while True:
     updateo = update_objects(p,objects) # effacer l'etoile 
     display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
     #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
+
     
 
     
