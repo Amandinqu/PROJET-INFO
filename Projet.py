@@ -86,7 +86,7 @@ def display_map_and_char_and_objects(m, d, p, objects):
         print()
     print("your score: ", p["score"])
 def generate_random_map(size_map):
-    M_generate=[[0 for j in range(size_map)] for i in range(size_map)] 
+    M_generate=[[0]*size_map]*size_map
     return M_generate
 
 
