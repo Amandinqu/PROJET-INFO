@@ -63,7 +63,7 @@ def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage
 def create_objects(nb_objects, m): 
     nb = 0 #nombre des objects on veut afficher
     while nb < nb_objects:
-        x = random.randint(0,len(m[p["y"]])-1) #on a -1 car en random la deuxieme caractere est inclu
+        x = random.randint(0,len(m[[0]])-1) #on a -1 car en random la deuxieme caractere est inclu len(m[0]) longueur de la première sous liste 
         y = random.randint(0,len(m)-1)
         if m[y][x] == 0:
             m[y][x] = 2 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
