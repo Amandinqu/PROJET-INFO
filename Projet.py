@@ -85,23 +85,27 @@ def display_map_and_char_and_objects(m, d, p, objects):
                 
         print()
     print("your score: ", p["score"])
-def generate_random_map(size_map):
-    M_generate=[[0]*size_map]*size_map
+    
+def generate_random_map(size_map,proportion_wall):
+    M_generate = [[0 for elem in range(size_map)] for ligne in range(size_map)]
+    nombre_mur = int(size_map*proportion_wall)
+    nb = 0
+    while nb < nombre_mur:
+        x = random.randint(0,len(M_generate[0])-1) #on a -1 car en random la deuxieme caractere est inclu
+        y = random.randint(0,len(M_generate)-1)
+        if M_generate[y][x] == 0:
+            M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
+            nb += 1   
     return M_generate
 
 
-size_map=(5)
-
-m = [[0,0,0,1,1],
-     [0,0,0,0,1],
-     [1,1,0,0,0],
-     [0,0,0,0,0]]
 dico = {0:" ", 1:"#", 2: "*"} 
 p=create_perso((0,0))
 
 print(display_map(m,dico)) #on a none a la fin a cause de print
 print(create_perso((0,0)))
-objects = create_objects(3, m) # définir le nombre d'objet "*" dans notre jeu 
+objects = create_objects(3, m) # définir le nombre d'objet "*" dans notre jeu
+m = generate_random_map(5,2)
 display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
 
 while True:
