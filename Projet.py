@@ -23,7 +23,7 @@ def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonct
             if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
                 print(p["char"],end=" ") # affichage du personnage 
             else: 
-                print(d[valeur],end" ") # sinon on affiche la valeur du dic d 
+                print(d[valeur],end=" ") # sinon on affiche la valeur du dic d 
             print() # retour à la ligne à la fin de chaque ligne de la matrice 
                         
 def update_p(letter,p): # mise à jour de la position du personnage sur la carte 
