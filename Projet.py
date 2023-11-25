@@ -21,7 +21,7 @@ def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonct
     for i,ligne in enumerate(M): 
         for j,valeur in enumerate(ligne): # boucle imbriqué --> on parcourt ici chaque élément de la matrice M 
             if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
-                print(p["char"],end" ") # affichage du personnage 
+                print(p["char"],end=" ") # affichage du personnage 
             else: 
                 print(d[valeur],end" ") # sinon on affiche la valeur du dic d 
             print() # retour à la ligne à la fin de chaque ligne de la matrice 
