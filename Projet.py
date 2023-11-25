@@ -135,19 +135,17 @@ while True:
     #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
 
 def create_objects(nb_objects, m):   
-    # objects_couple=set() création d'un set vide 
-    nb = 0 #nombre des objects on veut afficher
-    O =[] 
-    while nb < nb_objects: 
+    objects_couple=set() #création d'un set vide 
+    while len(objects_couple) < nb_objects: 
         x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
         y = random.randint(0,len(m)-1) 
-        if (x,y) not in O:
-            if m[y][x] == 0:
-                O.append((x,y)) # objects_set.add((x,y)) 
-                nb += 1
-    return O     # return objects_set
+        if m[y][x] == 0:
+                objects_couple.add((x,y))
+                print(objects_couple)
+    return objects_couple
+    
 def update_objects(p,objects):
-    if M[p["y"]][p["x"]] == 2: # M[p["y"]][p["x"]] == objects_set 
+    if M[p["y"]][p["x"]] == objects_couple :
         M[p["y"]][p["x"]] = 0
         p["score"] += 1
 
