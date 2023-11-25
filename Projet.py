@@ -126,7 +126,7 @@ def create_objects(nb_objects, m):
             if m[y][x] == 0:
                 O.append((x,y)) # objects_set.add((x,y)) 
                 nb += 1
-    return O     # return objects_set 
+    return O     # return objects_set
 def update_objects(p,objects):
     if M[p["y"]][p["x"]] == 2:
         M[p["y"]][p["x"]] = 0
@@ -142,7 +142,7 @@ def display_map_and_char_object(m, d, p, objects):
                  # print("*",end=" ") 
             else:
                 print(d[valeur], end='')
-            for e in objects: 
+            for e in objects: # pas la peine 
                 x,y = e
                 if i == y and j == x:
                     print("*")
