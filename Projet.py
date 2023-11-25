@@ -106,16 +106,18 @@ def generate_random_map(size_map,proportion_wall):
     #while M_generate[sortie_y][sortie_x]!=1 : # 1 qui est le mur
         #sortie_x = random.randint(0, len(M_generate[0]) - 1)
         #sortie_y = random.randint(0, len(M_generate) - 1)
+    
     #M_generate[sortie_y][sortie_x]=3
     # return M_generate
     # def create_new_level( p,m,obj,size_map, proportion_wall):
          #new_map=generate_random(size_map,proportion_wall) # appel à la fonction
     #for  i, ligne in enumerate(new_map):
         #for j, valeur in enumerate(ligne):
-              # if valeur == 2 
-              # p["x”],p["y"]=new_position_perso 
+              # if valeur == 2  # 2 correpond à l'entree 
+              # p["x”],p["y"]=new_position_perso
+        # new_obj=create_objects(nb_objects,new_map)  # appel à la fonction 
+   # return new_map 
    
-
 dico = {0:" ", 1:"#", 2: "*"} 
 p=create_perso((0,0))
 
