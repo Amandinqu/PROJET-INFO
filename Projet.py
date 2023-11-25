@@ -70,7 +70,7 @@ def create_objects(nb_objects, m):
             nb += 1 # ajout pour que la boucle s'arrete 
             
 def update_objects(p,objects):
-    if m[p["y"]][p["x"]] == 2:
+    if m[p["y"]][p["x"]] == 2:  
         m[p["y"]][p["x"]] = 0 #pour que le score "mange une seule fois"
         p["score"] += 1 #ajout du score changement de score 
 
@@ -141,7 +141,7 @@ def create_objects(nb_objects, m):
                 nb += 1
     return O     # return objects_set
 def update_objects(p,objects):
-    if M[p["y"]][p["x"]] == 2:
+    if M[p["y"]][p["x"]] == 2: # M[p["y"]][p["x"]] == objects_set 
         M[p["y"]][p["x"]] = 0
         p["score"] += 1
 
