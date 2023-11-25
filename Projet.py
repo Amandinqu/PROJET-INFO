@@ -108,9 +108,13 @@ def generate_random_map(size_map,proportion_wall):
         #sortie_y = random.randint(0, len(M_generate) - 1)
     #M_generate[sortie_y][sortie_x]=3
     # return M_generate
-
-
-
+    # def create_new_level( p,m,obj,size_map, proportion_wall):
+         #new_map=generate_random(size_map,proportion_wall) # appel à la fonction
+    #for  i, ligne in enumerate(new_map):
+        #for j, valeur in enumerate(ligne):
+              # if valeur == 2 
+              # p["x”],p["y"]=new_position_perso 
+   
 
 dico = {0:" ", 1:"#", 2: "*"} 
 p=create_perso((0,0))
@@ -132,7 +136,7 @@ def create_objects(nb_objects, m):
     # objects_couple=set() création d'un set vide 
     nb = 0 #nombre des objects on veut afficher
     O =[] 
-    while nb < nb_objects: # while len(object_set)<nb_objects: 
+    while nb < nb_objects: 
         x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
         y = random.randint(0,len(m)-1) 
         if (x,y) not in O:
