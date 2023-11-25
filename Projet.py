@@ -97,6 +97,19 @@ def generate_random_map(size_map,proportion_wall):
             M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
             nb += 1   
     return M_generate
+    #ajout dans la carte une entrée et une sortie 
+    # entree_x=random.randint(0,len(M_generate[0])-1)
+    # entree_y=random.randint(0,len(M_generate)-1)
+    # M_generate[entree_y][entree_x]=2 # represente l'entre par un 2 dans notre matrice 
+    #sortie_x=random.randint(0,len(M_generate[0])-1)
+    #sortie_y=random.randint(0,len(M_generate[0])-1)
+    #while M_generate[sortie_y][sortie_x]!=1 : # 1 qui est le mur
+        #sortie_x = random.randint(0, len(M_generate[0]) - 1)
+        #sortie_y = random.randint(0, len(M_generate) - 1)
+    #M_generate[sortie_y][sortie_x]=3
+    # return M_generate
+
+
 
 
 dico = {0:" ", 1:"#", 2: "*"} 
