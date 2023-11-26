@@ -5,7 +5,30 @@ def display_map(m,d): # affichage de la carte
         for elem in ligne: # parcours éléments de la ligne associée
             print(d[elem], end="") # affiche la valeur associé de la matrice sans retour à la ligne avec "end" 
         print() # retour à la ligne 
+    
+def generate_random_map(size_map,proportion_wall):
+    M_generate = [[0 for elem in range(size_map)] for ligne in range(size_map)]
+    nombre_mur = int(size_map*proportion_wall)
+    nb = 0
+    while nb < nombre_mur:
+        x = random.randint(0,len(M_generate[0])-1) #on a -1 car en random la deuxieme caractere est inclu
+        y = random.randint(0,len(M_generate)-1)
+        if M_generate[y][x] == 0:
+            M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
+            nb += 1   
+                    
+    while M_generate[y][x]==0:
+        x = random.randint(0, len(M_generate[0])-1)
+        y = random.randint(0, len(M_generate)-1)
+    M_generate[y][x] = 2
+    
+    while M_generate[y][x]==0:
+        x = random.randint(0, len(M_generate[0])-1)
+        y = random.randint(0, len(M_generate)-1)
+     M_generate[y][x] = 3
 
+    return M_generate
+   
 def create_perso(depart): # création dictionnaire représentant le personnage 
     x,y = depart # création du couple 
     p={} # création du dictionnaire 
@@ -14,18 +37,7 @@ def create_perso(depart): # création dictionnaire représentant le personnage
     p["y"] = y # de même pour la position en ordonné
     p["score"] = 0 #initialisation du score pour avoir le score (3.6)
     return p
-
-def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonction de la position du perso et pour les autres la valeur du dictionnaire d
-    x,y = p 
-    M = m.copy()#cf td 1 avec la methode copy les modifications n'impactent pas la matrice d'origine 
-    for i,ligne in enumerate(M): 
-        for j,valeur in enumerate(ligne): # boucle imbriqué --> on parcourt ici chaque élément de la matrice M 
-            if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
-                print(p["char"],end=" ") # affichage du personnage 
-            else: 
-                print(d[valeur],end=" ") # sinon on affiche la valeur du dic d 
-            print() # retour à la ligne à la fin de chaque ligne de la matrice 
-                        
+                       
 def update_p(letter,p): # mise à jour de la position du personnage sur la carte 
     if lettre in ["z","s","d","q"]: # verification de la lettre entrée 
         if lettre == "z": # en haut 
@@ -76,6 +88,24 @@ def update_objects(p,objects):
     if m[p["y"]][p["x"]] == 2:  
         m[p["y"]][p["x"]] = 0 #pour que le score "mange une seule fois"
         p["score"] += 1 #ajout du score changement de score 
+        
+#create_object correct avec le sujet 
+def create_objects(nb_objects, m):   
+    objects_couple=set() #création d'un set vide 
+    while len(objects_couple) < nb_objects: 
+        x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
+        y = random.randint(0,len(m)-1) 
+        if m[y][x] == 0 and (x,y) not in objects_couple::
+                objects_couple.add((x,y))
+    return objects_couple
+    
+def update_objects(p,objects): #j'ai voulu supprimer des elements directement mais ca change le largeur d'ensemble alors derrange la boucle for, il faut creer un nouvel ensemble
+    objects_copy = objects.copy()
+    for x,y in objects_copy:
+        if (p["x"], p["y"]) == (x,y):
+            objects.remove((x,y))
+            p["score"] += 1
+    return objects
 
 def display_map_and_char_and_objects(m, d, p, objects):
     M = m.copy()
@@ -87,74 +117,20 @@ def display_map_and_char_and_objects(m, d, p, objects):
                 print(d[valeur], end='')
                 
         print()
-    print("your score: ", p["score"])
-    
-def generate_random_map(size_map,proportion_wall):
-    M_generate = [[0 for elem in range(size_map)] for ligne in range(size_map)]
-    nombre_mur = int(size_map*proportion_wall)
-    nb = 0
-    while nb < nombre_mur:
-        x = random.randint(0,len(M_generate[0])-1) #on a -1 car en random la deuxieme caractere est inclu
-        y = random.randint(0,len(M_generate)-1)
-        if M_generate[y][x] == 0:
-            M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
-            nb += 1   
-                    
-    while M_generate[y][x]==0:
-        x = random.randint(0, len(M_generate[0])-1)
-        y = random.randint(0, len(M_generate)-1)
-    M_generate[y][x] = 2
-    
-    while M_generate[y][x]==0:
-        x = random.randint(0, len(M_generate[0])-1)
-        y = random.randint(0, len(M_generate)-1)
-     M_generate[y][x] = 3
+    print("your score: ", p["score"])  
+#fin de premiere idee
 
-    return M_generate
-    
-  #def delete_all_walls(m,pos):
-    #(x,y)=pos
-    # 8 cases entourant le personnage on peut utiliser une boucle imbriquée
-    # le personnage est dans une matrice de taille 3*3 où le perso est sur la 9 ème case 
-    #for i in range(x-1,x+2): # parcours les positions -1,0 et 1 
-        #for j in range(0,y-1,y+2): # parcours les position -1,0 et 1 
-            i#f m[i][j]==1: # verifier si c'est un mur
-                #m[i][j]=0 # elève le mur
-   
-dico = {0:" ", 1:"#"} 
-p=create_perso((0,0))
-
-print(display_map(m,dico)) #on a none a la fin a cause de print
-print(create_perso((0,0)))
-objects = create_objects(3, m) # définir le nombre d'objet "*" dans notre jeu
-m = generate_random_map(5,2)
-display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
-
-while True:
-    lettre = input("Quel deplacement?")
-    updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
-    updateo = update_objects(p,objects) # effacer l'etoile 
-    display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
-    #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
-
-def create_objects(nb_objects, m):   
-    objects_couple=set() #création d'un set vide 
-    while len(objects_couple) < nb_objects: 
-        x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
-        y = random.randint(0,len(m)-1) 
-        if m[y][x] == 0 and (x,y) not in objects_couple::
-                objects_couple.add((x,y))
-                print(objects_couple)
-    return objects_couple
-    
-def update_objects(p,objects): #j'ai voulu supprimer des elements directement mais ca change le largeur d'ensemble alors derrange la boucle for, il faut creer un nouvel ensemble
-    objects_copy = objects.copy()
-    for x,y in objects_copy:
-        if (p["x"], p["y"]) == (x,y):
-            objects.remove((x,y))
-            p["score"] += 1
-    return objects
-
+def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonction de la position du perso et pour les autres la valeur du dictionnaire d
+    x,y = p 
+    M = m.copy()#cf td 1 avec la methode copy les modifications n'impactent pas la matrice d'origine 
+    for i,ligne in enumerate(M): 
+        for j,valeur in enumerate(ligne): # boucle imbriqué --> on parcourt ici chaque élément de la matrice M 
+            if i==p["y"] and j==p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste) 
+                print(p["char"],end=" ") # affichage du personnage 
+            else: 
+                print(d[valeur],end=" ") # sinon on affiche la valeur du dic d 
+            print() # retour à la ligne à la fin de chaque ligne de la matrice 
+            
 def display_map_and_char_object(m, d, p, objects):
     M = m.copy()
     for i, ligne in enumerate(M):
@@ -172,6 +148,50 @@ def display_map_and_char_object(m, d, p, objects):
                     print("*", end="")
         print()
     print("your score: ", p["score"])
+
+def create_new_level(p,m,objects,size_map, proportion_wall):
+        new_objects = objects.copy() #il faut definir car si if n'est pas satisait il renvoie rien comme l'objets(mais pourquoi il n'est pas necessaire de definir m?)
+        if m[p["y"]][p["x"]] == 3:
+            M=generate_random_map(size_map,proportion_wall) # appel à la fonction
+            m = M 
+            for  i, ligne in enumerate(m):
+                for j, valeur in enumerate(ligne):
+                  if valeur == 2:  # 2 correpond à l'entree 
+                      p["x"],p["y"] = j, i
+            new_objects=create_objects(4,m)  # appel à la fonction
+        return m, new_objects 
+
+  #def delete_all_walls(m,pos):
+    #(x,y)=pos
+    # 8 cases entourant le personnage on peut utiliser une boucle imbriquée
+    # le personnage est dans une matrice de taille 3*3 où le perso est sur la 9 ème case 
+    #for i in range(x-1,x+2): # parcours les positions -1,0 et 1 
+        #for j in range(0,y-1,y+2): # parcours les position -1,0 et 1 
+            i#f m[i][j]==1: # verifier si c'est un mur
+                #m[i][j]=0 # elève le mur
+   
+dico = {0:" ", 1:"#", 2:"", 3:"X"} 
+p=create_perso((0,0))
+
+#print(display_map(m,dico)) #on a none a la fin a cause de print
+size_map = 8
+proportion_wall = 2
+m = generate_random_map(size_map, proportion_wall)
+create_perso((0,0))
+objects = create_objects(4, m) # définir le nombre d'objet "*" dans notre jeu
+display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
+
+while True:
+    lettre = input("Quel deplacement?")
+    updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
+    m, objects = create_new_level(p,m,objects,size_map,proportion_wall)
+    updateo = update_objects(p,objects) # effacer l'etoile 
+    display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
+    #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
+
+
+
+
     
 
     
