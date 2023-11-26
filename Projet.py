@@ -60,13 +60,14 @@ def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage
     return p
 
 #proposition pour les ameliorations 3.4, 3.5
+#premiere idee pour la creation des objets: on ajoute au dictionnaire d[2]="*" et on cree des objets par la modification de la matrice
 def create_objects(nb_objects, m): 
     nb = 0 #nombre des objects on veut afficher
     while nb < nb_objects:
         x = random.randint(0,len(m[[0]])-1) #on a -1 car en random la deuxieme caractere est inclu len(m[0]) longueur de la première sous liste 
         y = random.randint(0,len(m)-1)
         if m[y][x] == 0:
-            m[y][x] = 2 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
+            m[y][x] = 2 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
             nb += 1 # ajout pour que la boucle s'arrete 
             
 def update_objects(p,objects):
@@ -158,14 +159,15 @@ def display_map_and_char_object(m, d, p, objects):
         for j, valeur in enumerate(ligne):
             if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
                 print(p["char"], end='') # affichage du personnage 
+            else:
             k = 0  # pour voir si on affiche etoile ou valeur du dictionnaire   
-            for x,y in objects:
-                if i == y and j == x:
-                    k +=1
-            if k == 0:
-                print(d[valeur], end='')
-            else:   
-                print("*", end="")  
+                for x,y in objects:
+                    if i == y and j == x:
+                        k +=1
+                if k == 0:
+                    print(d[valeur], end='')
+                else:   
+                    print("*", end="")
         print()
     print("your score: ", p["score"])
     
