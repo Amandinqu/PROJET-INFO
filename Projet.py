@@ -94,7 +94,7 @@ def generate_random_map(size_map,proportion_wall):
         x = random.randint(0,len(M_generate[0])-1) #on a -1 car en random la deuxieme caractere est inclu
         y = random.randint(0,len(M_generate)-1)
         if M_generate[y][x] == 0:
-            M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dicctionaire avec la valeur qui correspond a objet
+            M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
             nb += 1   
     return M_generate
     #ajout dans la carte une entrée et une sortie 
@@ -118,7 +118,7 @@ def generate_random_map(size_map,proportion_wall):
         # new_obj=create_objects(nb_objects,new_map)  # appel à la fonction 
    # return new_map 
    
-dico = {0:" ", 1:"#", 2: "*"} 
+dico = {0:" ", 1:"#"} 
 p=create_perso((0,0))
 
 print(display_map(m,dico)) #on a none a la fin a cause de print
@@ -139,15 +139,18 @@ def create_objects(nb_objects, m):
     while len(objects_couple) < nb_objects: 
         x = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
         y = random.randint(0,len(m)-1) 
-        if m[y][x] == 0:
+        if m[y][x] == 0 and (x,y) not in objects_couple::
                 objects_couple.add((x,y))
                 print(objects_couple)
     return objects_couple
     
-def update_objects(p,objects):
-    if M[p["y"]][p["x"]] == objects_couple :
-        M[p["y"]][p["x"]] = 0
-        p["score"] += 1
+def update_objects(p,objects): #j'ai voulu supprimer des elements directement mais ca change le largeur d'ensemble alors derrange la boucle for, il faut creer un nouvel ensemble
+    objects_copy = objects.copy()
+    for x,y in objects_copy:
+        if (p["x"], p["y"]) == (x,y):
+            objects.remove((x,y))
+            p["score"] += 1
+    return objects
 
 def display_map_and_char_object(m, d, p, objects):
     M = m.copy()
@@ -155,15 +158,14 @@ def display_map_and_char_object(m, d, p, objects):
         for j, valeur in enumerate(ligne):
             if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
                 print(p["char"], end='') # affichage du personnage 
-            #if (i,j) in objects : 
-                 # print("*",end=" ") 
-            else:
-                print(d[valeur], end='')
-            for e in objects: # pas la peine 
-                x,y = e
+            k = 0  # pour voir si on affiche etoile ou valeur du dictionnaire   
+            for x,y in objects:
                 if i == y and j == x:
-                    print("*")
-                
+                    k +=1
+            if k == 0:
+                print(d[valeur], end='')
+            else:   
+                print("*", end="")  
         print()
     print("your score: ", p["score"])
     
