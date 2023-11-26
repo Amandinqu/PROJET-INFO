@@ -56,8 +56,10 @@ def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage
         if lettre == "q": #à gauche 
             p["x"] -=1
             if p["x"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus petite que la nombre des colonnes de la matrice
-                p["x"] += 1               
-    return p
+                p["x"] += 1 
+        #if letter.upper()=="E":
+            #delete_all_walls(carte,(p["x"],p["y"]))   # ici carte =generate_random_map(size_map,proportion_wall)
+    return p 
 
 #proposition pour les ameliorations 3.4, 3.5
 #premiere idee pour la creation des objets: on ajoute au dictionnaire d[2]="*" et on cree des objets par la modification de la matrice
@@ -110,14 +112,14 @@ def generate_random_map(size_map,proportion_wall):
 
     return M_generate
     
-    # def create_new_level( p,m,obj,size_map, proportion_wall):
-         #new_map=generate_random(size_map,proportion_wall) # appel à la fonction
-    #for  i, ligne in enumerate(new_map):
-        #for j, valeur in enumerate(ligne):
-              # if valeur == 2  # 2 correpond à l'entree 
-              # p["x”],p["y"]=new_position_perso
-        # new_obj=create_objects(nb_objects,new_map)  # appel à la fonction 
-   # return new_map 
+  #def delete_all_walls(m,pos):
+    #(x,y)=pos
+    # 8 cases entourant le personnage on peut utiliser une boucle imbriquée
+    # le personnage est dans une matrice de taille 3*3 où le perso est sur la 9 ème case 
+    #for i in range(x-1,x+2): # parcours les positions -1,0 et 1 
+        #for j in range(0,y-1,y+2): # parcours les position -1,0 et 1 
+            i#f m[i][j]==1: # verifier si c'est un mur
+                #m[i][j]=0 # elève le mur
    
 dico = {0:" ", 1:"#"} 
 p=create_perso((0,0))
