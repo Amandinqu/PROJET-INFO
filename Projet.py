@@ -28,7 +28,16 @@ def generate_random_map(size_map,proportion_wall):
      M_generate[y][x] = 3
 
     return M_generate
-   
+
+def delete_all_walls(m,pos):
+    (x,y)=pos
+    # 8 cases entourant le personnage on peut utiliser une boucle imbriquée
+    # le personnage est dans une matrice de taille 3*3 où le perso est sur la 9 ème case 
+    for i in range(y-1,y+2): # parcours les positions -1,0 et 1 (y correspond aux lignes)
+        for j in range(x-1,x+2): # parcours les position -1,0 et 1 
+            if m[i][j]==1: # verifier si c'est un mur
+                m[i][j]=0 # elève le mur
+
 def create_perso(depart): # création dictionnaire représentant le personnage 
     x,y = depart # création du couple 
     p={} # création du dictionnaire 
@@ -161,16 +170,9 @@ def create_new_level(p,m,objects,size_map, proportion_wall):
             new_objects=create_objects(4,m)  # appel à la fonction
         return m, new_objects 
 
-  #def delete_all_walls(m,pos):
-    #(x,y)=pos
-    # 8 cases entourant le personnage on peut utiliser une boucle imbriquée
-    # le personnage est dans une matrice de taille 3*3 où le perso est sur la 9 ème case 
-    #for i in range(x-1,x+2): # parcours les positions -1,0 et 1 
-        #for j in range(0,y-1,y+2): # parcours les position -1,0 et 1 
-            i#f m[i][j]==1: # verifier si c'est un mur
-                #m[i][j]=0 # elève le mur
+  
    
-dico = {0:" ", 1:"#", 2:"", 3:"X"} 
+dico = {0:" ", 1:"#", 2:" ", 3:"X"} 
 p=create_perso((0,0))
 
 #print(display_map(m,dico)) #on a none a la fin a cause de print
