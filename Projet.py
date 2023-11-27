@@ -61,7 +61,7 @@ def update_p(letter,p): # mise à jour de la position du personnage sur la carte
 
 #proposition pour les ameliorations 3.1, 3.2:
 def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage # ne sort pas de la carte 
-    if lettre in ["z","s","d","q"]: #verification de la lettre entrée 
+    if lettre in ["z","s","d","q","E"]: #verification de la lettre entrée 
         if lettre == "z": # en haut 
             p["y"] -=1 # decremente de 1 "y" la position en ordonnée 
             if p["y"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "y" ne peut pas etre plus petite que la nombre des lignes de la matrice et si la valeur de matrice des cordonnees de notre x,y est egal a 1, on a #  
@@ -78,8 +78,8 @@ def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage
             p["x"] -=1
             if p["x"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus petite que la nombre des colonnes de la matrice
                 p["x"] += 1 
-        #if letter.upper()=="E":
-            #delete_all_walls(carte,(p["x"],p["y"]))   # ici carte =generate_random_map(size_map,proportion_wall)
+        if letter.upper()=="E": #marche aussi sans upper()
+            delete_all_walls(m,(p["x"],p["y"])) 
     return p 
 
 #proposition pour les ameliorations 3.4, 3.5
