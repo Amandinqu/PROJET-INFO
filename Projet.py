@@ -170,8 +170,68 @@ def create_new_level(p,m,objects,size_map, proportion_wall):
             new_objects=create_objects(4,m)  # appel à la fonction
         return m, new_objects 
 
-  
-   
+
+#ajout des bombes au code, cad des objets qu'on doit eviter car si on les touche, on perde le jeu (boucle while s'arrete)
+def create_bombes(nb_bombes, m, objects): #il faut ajouter la propriete objects car il y a la possibilite d'avoir bombes et objects a la meme position quand on cree un nouvel niveau
+    bombes_couple=set() #création d'un set vide 
+    while len(bombes_couple) < nb_bombes: 
+        a = random.randint(0,len(m[0])-1) #on a -1 car en random la deuxieme caractere est inclu
+        b = random.randint(0,len(m)-1) 
+        if m[b][a] == 0 and (a,b) not in bombes_couple and (a,b) not in objects: #pour ne pas avoir des objets et des bombes a la meme position
+                bombes_couple.add((a,b))
+    print(bombes_couple)
+    return bombes_couple
+
+def update_bombes(p,bombes): #j'ai voulu supprimer des elements directement mais ca change le largeur d'une ensemble alors derrange la boucle for, il faut creer une nouvelle ensemble
+    bombes_copy = bombes.copy()
+    for a,b in bombes_copy:
+        if (p["x"], p["y"]) == (a,b): # si la personnage et a la position de la bombe on affiche le final score
+            print()
+            print("You lost :( your final score: ", p["score"])
+            bombes = set() 
+    return bombes   
+
+def display_map_and_char_object_bombes(m, d, p, objects, bombes):
+    M = m.copy()
+    for i, ligne in enumerate(M):
+        for j, valeur in enumerate(ligne):
+            if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
+                print(p["char"], end='')
+            else:   
+                k = 0
+                for x,y in objects:
+                    if i == y and j == x:
+                        k +=1
+                if k == 0: #on est sur qu'il n y a pas des objets a afficher, il faut verifier s'il ya des bombes
+                    l = 0
+                    for a,b in bombes:
+                        if i == b and j == a:
+                            l += 1
+                    if l == 0:
+                        print(d[valeur], end='')
+                    else:
+                        print("!", end="")
+                else:
+                    print("*", end="")
+                
+        print()
+    print("your score: ", p["score"])
+
+def create_new_level(p,m,objects,bombes,size_map, proportion_wall):
+        new_objects = objects.copy() #on fait pas du copie car si le condtion if n'est pas satisfait, la fonction renvoie pas de valeur
+        new_bombes = bombes.copy() 
+        if m[p["y"]][p["x"]] == 3:
+            M=generate_random_map(size_map,proportion_wall) # appel à la fonction
+            m = M
+            for  i, ligne in enumerate(m):
+                for j, valeur in enumerate(ligne):
+                  if valeur == 2:  # 2 correpond à l'entree 
+                      p["x"],p["y"] = j, i
+            new_objects=create_objects(4,m)  # appel à la fonction
+            new_bombes=create_bombes(2,m,new_objects) 
+        return m, new_objects, new_bombes
+
+
 dico = {0:" ", 1:"#", 2:" ", 3:"X"} 
 p=create_perso((0,0))
 
@@ -181,6 +241,8 @@ proportion_wall = 2
 m = generate_random_map(size_map, proportion_wall)
 create_perso((0,0))
 objects = create_objects(4, m) # définir le nombre d'objet "*" dans notre jeu
+#bombes = create_bombes(2, m, objects)
+#display_map_and_char_object_bombes(m,dico,p, objects, bombes)
 display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
 
 while True:
@@ -188,6 +250,10 @@ while True:
     updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
     m, objects = create_new_level(p,m,objects,size_map,proportion_wall)
     updateo = update_objects(p,objects) # effacer l'etoile 
+    #updateb = update_bombes(p,bombes) #on verifie si la longeur de l'ensemble bombes doit changer
+    #if len(updateb) == 0: #si oui, cad que la personnage a touche une bombe, le joueur perde
+        #break #pour arreter la boucle
+    #display_map_and_char_object_bombes(m,dico,updatep, updateo, updateb)
     display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
     #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
 
