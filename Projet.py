@@ -27,6 +27,22 @@ def generate_random_map(size_map,proportion_wall):
         y = random.randint(0, len(M_generate)-1)
      M_generate[y][x] = 3
 
+    #entree_x=random.randint(0,len(M_generate[0])-1)
+    #entree_y=random.randint(0,len(M_generate)-1)
+    #while M_generate[entree_y][entree_x] != 0:
+        #entree_x=random.randint(0,len(M_generate[0])-1)
+        #entree_y=random.randint(0,len(M_generate)-1)
+        
+    #M_generate[entree_y][entree_x]=2 # represente l'entre par un 2 dans notre matrice
+        
+    #sortie_x=random.randint(0,len(M_generate[0])-1)
+    #sortie_y=random.randint(0,len(M_generate[0])-1)
+    #while M_generate[sortie_y][sortie_x]!=0 : 
+        #sortie_x = random.randint(0, len(M_generate[0]) - 1)
+        #sortie_y = random.randint(0, len(M_generate) - 1)
+        
+    #M_generate[sortie_y][sortie_x]=3
+
     return M_generate
 
 def delete_all_walls(m,pos):
@@ -46,18 +62,6 @@ def create_perso(depart): # création dictionnaire représentant le personnage
     p["y"] = y # de même pour la position en ordonné
     p["score"] = 0 #initialisation du score pour avoir le score (3.6)
     return p
-                       
-def update_p(letter,p): # mise à jour de la position du personnage sur la carte 
-    if lettre in ["z","s","d","q"]: # verification de la lettre entrée 
-        if lettre == "z": # en haut 
-            personne["y"] +=1 # incrémente de 1 "y" la position en ordonnée 
-        if lettre == "s": # en bas 
-            personne["y"] -=1 # décrémente de 1 "y" la position en ordonnée
-        if lettre == "d": # à droite 
-            personne["x"] +=1 # incrémente de 1 "x" la position en abscisse 
-        if lettre == "q": # à gauche 
-            personne["x"] -=1 # décrémente de 1 "x" la position en abscisse 
-    return personne # retourne la position du personnage sur la carte 
 
 #proposition pour les ameliorations 3.1, 3.2:
 def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage # ne sort pas de la carte 
