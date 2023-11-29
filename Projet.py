@@ -17,33 +17,36 @@ def generate_random_map(size_map,proportion_wall):
             M_generate[y][x] = 1 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
             nb += 1   
                     
-    while M_generate[y][x]==0:
-        x = random.randint(0, len(M_generate[0])-1)
-        y = random.randint(0, len(M_generate)-1)
-    M_generate[y][x] = 2
     
-    while M_generate[y][x]==0:
-        x = random.randint(0, len(M_generate[0])-1)
-        y = random.randint(0, len(M_generate)-1)
-     M_generate[y][x] = 3
 
-    #entree_x=random.randint(0,len(M_generate[0])-1)
-    #entree_y=random.randint(0,len(M_generate)-1)
-    #while M_generate[entree_y][entree_x] != 0:
-        #entree_x=random.randint(0,len(M_generate[0])-1)
-        #entree_y=random.randint(0,len(M_generate)-1)
+    entree_x=random.randint(0,len(M_generate[0])-1)
+    entree_y=random.randint(0,len(M_generate)-1)
+    while M_generate[entree_y][entree_x] != 0:
+        entree_x=random.randint(0,len(M_generate[0])-1)
+        entree_y=random.randint(0,len(M_generate)-1)
         
-    #M_generate[entree_y][entree_x]=2 # represente l'entre par un 2 dans notre matrice
+    M_generate[entree_y][entree_x]=2 # represente l'entre par un 2 dans notre matrice
         
-    #sortie_x=random.randint(0,len(M_generate[0])-1)
-    #sortie_y=random.randint(0,len(M_generate[0])-1)
-    #while M_generate[sortie_y][sortie_x]!=0 : 
-        #sortie_x = random.randint(0, len(M_generate[0]) - 1)
-        #sortie_y = random.randint(0, len(M_generate) - 1)
+    sortie_x=random.randint(0,len(M_generate[0])-1)
+    sortie_y=random.randint(0,len(M_generate[0])-1)
+    while M_generate[sortie_y][sortie_x]!=0 : 
+        sortie_x = random.randint(0, len(M_generate[0]) - 1)
+        sortie_y = random.randint(0, len(M_generate) - 1)
         
-    #M_generate[sortie_y][sortie_x]=3
-
+    M_generate[sortie_y][sortie_x]=3
+    
     return M_generate
+#premiere idee pour l'entree et la sortie
+    #while M_generate[y][x]==0:
+        #x = random.randint(0, len(M_generate[0])-1)
+        #y = random.randint(0, len(M_generate)-1)
+    #M_generate[y][x] = 2
+    
+    #while M_generate[y][x]==0:
+        #x = random.randint(0, len(M_generate[0])-1)
+        #y = random.randint(0, len(M_generate)-1)
+     #M_generate[y][x] = 3 # lors de l'affichage on a remarque que ce code a remplace l'entree par la sortie 
+
 
 def delete_all_walls(m,pos):
     (x,y)=pos
@@ -55,13 +58,17 @@ def delete_all_walls(m,pos):
                 m[i][j]=0 # elève le mur
 
 def create_perso(depart): # création dictionnaire représentant le personnage 
-    x,y = depart # création du couple 
-    p={} # création du dictionnaire 
-    p["char"]="o" #on peut faire p = {"char":"o"}
-    p["x"] = x # si cle "x" n'existe pas on crée la cle et on ajoute au dictionnaire avec la valeur x qui est sa position en abscisse 
-    p["y"] = y # de même pour la position en ordonné
-    p["score"] = 0 #initialisation du score pour avoir le score (3.6)
+    x,y = depart
+    p = {"char": "o", "x": x, "y": y, "score": 0}
     return p
+#premiere idee, mais trop long
+    #x,y = depart # création du couple 
+    #p={} # création du dictionnaire 
+    #p["char"]="o" #on peut faire p = {"char":"o"}
+    #p["x"] = x # si cle "x" n'existe pas on crée la cle et on ajoute au dictionnaire avec la valeur x qui est sa position en abscisse 
+    #p["y"] = y # de même pour la position en ordonné
+    #p["score"] = 0 #initialisation du score pour avoir le score (3.6)
+
 
 #proposition pour les ameliorations 3.1, 3.2:
 def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage # ne sort pas de la carte 
@@ -82,13 +89,13 @@ def update_p(lettre,p,m): #changement de cordonnes en dictionnaire de personnage
             p["x"] -=1
             if p["x"] < 0 or m[p["y"]][p["x"]] == 1: #l'indice de "x" ne peut pas etre plus petite que la nombre des colonnes de la matrice
                 p["x"] += 1 
-        if letter.upper()=="E": #marche aussi sans upper()
+        if letter=="E": 
             delete_all_walls(m,(p["x"],p["y"])) 
     return p 
 
 #proposition pour les ameliorations 3.4, 3.5
 #premiere idee pour la creation des objets: on ajoute au dictionnaire d[2]="*" et on cree des objets par la modification de la matrice
-def create_objects(nb_objects, m): 
+def create_objects_idee(nb_objects, m): 
     nb = 0 #nombre des objects on veut afficher
     while nb < nb_objects:
         x = random.randint(0,len(m[[0]])-1) #on a -1 car en random la deuxieme caractere est inclu len(m[0]) longueur de la première sous liste 
@@ -97,7 +104,7 @@ def create_objects(nb_objects, m):
             m[y][x] = 2 #on change la valeur de la matrice pour pouvoir utiliser la dictionaire avec la valeur qui correspond a objet
             nb += 1 # ajout pour que la boucle s'arrete 
             
-def update_objects(p,objects):
+def update_objects_idee(p,objects):
     if m[p["y"]][p["x"]] == 2:  
         m[p["y"]][p["x"]] = 0 #pour que le score "mange une seule fois"
         p["score"] += 1 #ajout du score changement de score 
@@ -112,26 +119,18 @@ def create_objects(nb_objects, m):
                 objects_couple.add((x,y))
     return objects_couple
     
-def update_objects(p,objects): #j'ai voulu supprimer des elements directement mais ca change le largeur d'ensemble alors derrange la boucle for, il faut creer un nouvel ensemble
-    objects_copy = objects.copy()
-    for x,y in objects_copy:
-        if (p["x"], p["y"]) == (x,y):
-            objects.remove((x,y))
-            p["score"] += 1
-    return objects
+def update_objects(p,objects): 
+    if (p["x"], p["y"]) in objects:
+        objects.remove((p["x"], p["y"]))
+        p["score"] += 1
+    return objects  
+#premiere idee avec la copie
+    #objects_copy = objects.copy()
+    #for x,y in objects_copy:
+        #if (p["x"], p["y"]) == (x,y):
+            #objects.remove((x,y))
+            #p["score"] += 1
 
-def display_map_and_char_and_objects(m, d, p, objects):
-    M = m.copy()
-    for i, ligne in enumerate(M):
-        for j, valeur in enumerate(ligne):
-            if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
-                print(p["char"], end='')
-            else:
-                print(d[valeur], end='')
-                
-        print()
-    print("your score: ", p["score"])  
-#fin de premiere idee
 
 def display_map_and_char(m,d,p): # affichage du personnage sur la carte en fonction de la position du perso et pour les autres la valeur du dictionnaire d
     x,y = p 
@@ -175,7 +174,7 @@ def create_new_level(p,m,objects,size_map, proportion_wall):
         return m, new_objects 
 
 
-#ajout des bombes au code, cad des objets qu'on doit eviter car si on les touche, on perde le jeu (boucle while s'arrete)
+#ajout personel: ajout des bombes cad des objets qu'on doit eviter car si on les touche, on perde le jeu (boucle while s'arrete)
 def create_bombes(nb_bombes, m, objects): #il faut ajouter la propriete objects car il y a la possibilite d'avoir bombes et objects a la meme position quand on cree un nouvel niveau
     bombes_couple=set() #création d'un set vide 
     while len(bombes_couple) < nb_bombes: 
@@ -221,7 +220,7 @@ def display_map_and_char_object_bombes(m, d, p, objects, bombes):
         print()
     print("your score: ", p["score"])
 
-def create_new_level(p,m,objects,bombes,size_map, proportion_wall):
+def create_new_level2(p,m,objects,bombes,size_map, proportion_wall):
         new_objects = objects.copy() #on fait pas du copie car si le condtion if n'est pas satisfait, la fonction renvoie pas de valeur
         new_bombes = bombes.copy() 
         if m[p["y"]][p["x"]] == 3:
@@ -253,13 +252,22 @@ while True:
     lettre = input("Quel deplacement?")
     updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
     m, objects = create_new_level(p,m,objects,size_map,proportion_wall)
-    updateo = update_objects(p,objects) # effacer l'etoile 
-    #updateb = update_bombes(p,bombes) #on verifie si la longeur de l'ensemble bombes doit changer
-    #if len(updateb) == 0: #si oui, cad que la personnage a touche une bombe, le joueur perde
-        #break #pour arreter la boucle
-    #display_map_and_char_object_bombes(m,dico,updatep, updateo, updateb)
+    updateo = update_objects(p,objects) # rammasage des etoiles
     display_map_and_char_and_objects(m,dico,updatep,updateo) #quand on n'utilise pas le print(display_map...) on n'a pas de none
-    #2.4 comment arreter? # première idée dire que le nbr d'objet est égal au nbr d'objet "manger" par le personnage 
+
+
+#while avec ajout personel
+while True:
+    lettre = input("Quel deplacement?")
+    updatep = update_p(lettre,p,m)  #changement coordonné de l'objet 
+    m, objects = create_new_level(p,m,objects,size_map,proportion_wall)
+    updateo = update_objects(p,objects) # effacer l'etoile 
+    updateb = update_bombes(p,bombes) #on verifie si la longeur de l'ensemble bombes doit changer
+    if len(updateb) == 0: #si oui, cad que la personnage a touche une bombe, le joueur perde
+        break #pour arreter la boucle
+    display_map_and_char_object_bombes(m,dico,updatep, updateo, updateb)
+    display_map_and_char_and_objects(m,dico,updatep,updateo, updateb) #quand on n'utilise pas le print(display_map...) on n'a pas de none
+
 
 
 
