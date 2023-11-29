@@ -149,17 +149,24 @@ def display_map_and_char_object(m, d, p, objects):
         for j, valeur in enumerate(ligne):
             if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
                 print(p["char"], end='') # affichage du personnage 
+            elif (j,i) in objects:
+                print("*", end="")
             else:
-            k = 0  # pour voir si on affiche etoile ou valeur du dictionnaire   
-                for x,y in objects:
-                    if i == y and j == x:
-                        k +=1
-                if k == 0:
-                    print(d[valeur], end='')
-                else:   
-                    print("*", end="")
-        print()
+                print(d[valeur], end='')
+         print()
     print("your score: ", p["score"])
+#premiere idee mais trop long
+            #else:
+            #k = 0  # pour voir si on affiche etoile ou valeur du dictionnaire   
+                #for x,y in objects:
+                    #if i == y and j == x:
+                        #k +=1
+                #if k == 0:
+                    #print(d[valeur], end='')
+                #else:   
+                    #print("*", end="")
+        #print()
+    #print("your score: ", p["score"])
 
 def create_new_level(p,m,objects,size_map, proportion_wall):
         new_objects = objects.copy() #il faut definir car si if n'est pas satisait il renvoie rien comme l'objets(mais pourquoi il n'est pas necessaire de definir m?)
@@ -186,12 +193,10 @@ def create_bombes(nb_bombes, m, objects): #il faut ajouter la propriete objects 
     return bombes_couple
 
 def update_bombes(p,bombes): #j'ai voulu supprimer des elements directement mais ca change le largeur d'une ensemble alors derrange la boucle for, il faut creer une nouvelle ensemble
-    bombes_copy = bombes.copy()
-    for a,b in bombes_copy:
-        if (p["x"], p["y"]) == (a,b): # si la personnage et a la position de la bombe on affiche le final score
-            print()
-            print("You lost :( your final score: ", p["score"])
-            bombes = set() 
+    if (p["x"], p["y"]) in bombes: # si la personnage et a la position de la bombe on affiche le final score
+        print()
+        print("You lost :( your final score: ", p["score"])
+        bombes = set() 
     return bombes   
 
 def display_map_and_char_object_bombes(m, d, p, objects, bombes):
@@ -200,22 +205,12 @@ def display_map_and_char_object_bombes(m, d, p, objects, bombes):
         for j, valeur in enumerate(ligne):
             if i == p["y"] and j == p["x"]: #y correspond aux lignes de la matrice et x aux valeurs de la matrice (sous-liste)
                 print(p["char"], end='')
-            else:   
-                k = 0
-                for x,y in objects:
-                    if i == y and j == x:
-                        k +=1
-                if k == 0: #on est sur qu'il n y a pas des objets a afficher, il faut verifier s'il ya des bombes
-                    l = 0
-                    for a,b in bombes:
-                        if i == b and j == a:
-                            l += 1
-                    if l == 0:
-                        print(d[valeur], end='')
-                    else:
-                        print("!", end="")
-                else:
-                    print("*", end="")
+            elif (j,i) in objects:
+                print("*", end="")
+            elif (j,i) in bombes:
+                print("!", end="")   
+            else:
+                print(d[valeur], end='')
                 
         print()
     print("your score: ", p["score"])
@@ -244,9 +239,9 @@ proportion_wall = 2
 m = generate_random_map(size_map, proportion_wall)
 create_perso((0,0))
 objects = create_objects(4, m) # définir le nombre d'objet "*" dans notre jeu
-#bombes = create_bombes(2, m, objects)
-#display_map_and_char_object_bombes(m,dico,p, objects, bombes)
 display_map_and_char_and_objects(m,dico,p,objects) #quand on n'utilise pas le print(display_map...) on n'a pas de none
+bombes = create_bombes(2, m, objects)
+display_map_and_char_object_bombes(m,dico,p, objects, bombes)
 
 while True:
     lettre = input("Quel deplacement?")
